@@ -1,0 +1,383 @@
+1- Crie um algoritmo que tenha variáveis que representam disciplinas. Exemplo: Ciências, Matemáticas,
+Português, Educação Física, Geografia, História, etc.
+Cada disciplina terá números de ponto flutuante como chave, e o nome dos alunos como valor dessas
+chaves. Exemplo, Pedrinho tirou 5,2 em Matemática -> val matemática = mapOf(5,2 to “Pedrinho”).
+Depois imprima todos os alunos aprovados, aqueles que tiraram mais do que 6, no final do código.
+
+
+fun main() {
+
+    val ciencias = mapOf("Joao" to 10.0,"Maria" to 9.6,"Ana" to 5.5)
+
+    val matematica = mapOf("Joao" to 8.3, "Maria" to 4.5, "Ana" to 8.7)
+
+    print ("Notas de Ciências Aprovados\n")
+    ciencias.filter { it.value > 6.0 }
+        .forEach { (aluno, nota) -> println("$aluno = $nota") }
+    
+    
+}
+
+============================================================================================================================================================================================================================
+
+
+2- Uma equipe de jogadores de LoL querem armazenar dados de suas partidas para analisar com mais
+cuidados tudo o que aconteceu durante cada partida. Crie um algoritmo capaz de armazenar em mapa
+as seguintes características:
+- Dano Total,
+- Dano Médio,
+- Dano Sofrido Médio.
+- Distância Percorrida,
+
+- Número de Mortes (derrota),
+- Número de Abatimento (inimigos mortos).
+Considerando que a equipe tenha 4 jogadores, separe a informação de cada jogador em um mapa.
+Depois imprima a média da equipe de cada uma das chaves que foram citadas acima.
+
+https://pl.kotl.in/-NhHbJF_-
+
+data class Estatisticas(
+	val danoTotal: Int,
+    val danoMedio: Int,
+    val danoSofridoMedio: Int,
+    val distanciaPercorrida: Int,
+    val numeroDeMortes: Int,
+    val numeroDeAbates: Int
+
+)
+
+fun main() {
+    
+    		val equipe = mutableMapOf<String, Estatisticas>()
+            
+            println("Quantos jogadores deseja cadastrar? ")
+            val numJogadores = readLine()!!.toInt()
+            
+            for (i in 1..numJogadores){
+                println("Digite o nome do Jogador $i: ")
+                val nome = readLine()!!
+                
+                println("danoTotal: ")
+                val danoTotal = readLine()!!.toInt()
+                
+                println("danoMedio: ")
+                val danoMedio = readLine()!!.toInt()
+                
+                println("danoSofridoMedio: ")
+                val danoSofridoMedio = readLine()!!.toInt()
+                
+                println("distanciaPercorrida: ")
+                val distanciaPercorrida = readLine()!!.toInt()
+                
+                println("numeroDeMortes: ")
+                val numeroDeMortes = readLine()!!.toInt()
+                
+                println("numeroDeAbates: ")
+                val numeroDeAbates = readLine()!!.toInt()
+                
+                equipe[nome] = Estatisticas(
+                	danoTotal, danoMedio, danoSofridoMedio,
+                    distanciaPercorrida, numeroDeMortes, numeroDeAbates
+                )
+                println("---------")
+                
+            }
+     
+     var totalDanoTotal = 0
+     var totalDanoMedio = 0
+     var totalDanoSofrido = 0
+     var totalDistancia = 0
+     var totalMortes = 0
+     var totalAbates = 0
+     
+   
+        
+        equipe.forEach {(_, stats) ->
+            totalDanoTotal += stats.danoTotal
+            totalDanoMedio += stats.danoMedio
+            totalDanoSofrido += stats.danoSofridoMedio
+            totalDistancia += stats.distanciaPercorrida
+            totalMortes += stats.numeroDeMortes
+            totalAbates += stats.numeroDeAbates
+           }
+        
+        
+        val numeroJogadores = equipe.size
+    	
+		println("Média da equipe:")
+        println("Dano Total: ${totalDanoTotal / numeroJogadores}")
+        println("Dano Médio: ${totalDanoMedio / numeroJogadores}")
+        println("Dano Médio Sofrido: ${totalDanoSofrido / numeroJogadores}")
+        println("Distancia Média: ${totalDistancia / numeroJogadores}")
+        println("Média Mortes: ${totalMortes / numeroJogadores}")
+        println("Média Abates: ${totalAbates / numeroJogadores}")
+    	
+        }
+
+============================================================================================================================================================================================================================
+
+
+3- Uma comissão desportiva quer que você crie um programa para armazenar dados de um torneio de
+futebol, esses dados são: gols marcados, gols sofridos, descrição do gol (nome do jogador, tempo que
+o gol aconteceu, como foi o gol: normal, falta, pênalti, etc.), faltas cometidas (nome do jogador que
+sofreu e cometeu a falta, teve cartão? Teve lesão?), tempo da partida, jogadores titulares, jogadores
+reserva, jogadores substituídos tanto os que saíram como os que entraram, nome dos árbitros, número
+de laterais cobrados, número de escanteio cobrados. Faça com que o algoritmo armazena os dados dos
+dois times que jogaram a partida.
+Simule 5 partidas, depois disso imprima, quem foi o time que marcou mais gols, quem foi o time que
+cometeu mais faltas, quem foi o jogador que mais marcou gols, quem foi o jogador mais substituído (que
+saiu de campo), qual time sofreu mais gols, qual o tipo de gol mais comum, qual o jogador que mais
+cometeu faltas, número de cartões amarelos e vermelhos durante o campeonato, nome do jogadores
+lesionados, qual time titular marcou mais gols sem sofrer nenhum gol, qual jogador reserva entrou mais
+vezes em campo, qual time mais tocou a bola para fora (lateral e escanteio), e por fim a posição de cada
+time no campeonato, do primeiro ao último lugar.
+Use somente mapas nesse exercício, não use listas e nem classes.
+
+https://pl.kotl.in/-hTOd30w4
+
+
+fun main() {
+    val times = mutableMapOf<String, MutableMap<String, Any>>()
+
+    // Criando 2 times
+    val timeA = "Tigres"
+    val timeB = "Leões"
+
+    times[timeA] = mutableMapOf(
+        "golsMarcados" to 0,
+        "golsSofridos" to 0,
+        "faltasCometidas" to 0,
+        "escanteios" to 0,
+        "laterais" to 0,
+        "jogadores" to mutableMapOf<String, MutableMap<String, Any>>()
+    )
+
+    times[timeB] = mutableMapOf(
+        "golsMarcados" to 0,
+        "golsSofridos" to 0,
+        "faltasCometidas" to 0,
+        "escanteios" to 0,
+        "laterais" to 0,
+        "jogadores" to mutableMapOf<String, MutableMap<String, Any>>()
+    )
+
+    // Jogadores (nomes fictícios)
+    val jogadoresA = listOf("João", "Carlos", "Pedro", "Rafael", "Lucas", "Miguel")
+    val jogadoresB = listOf("Henrique", "Matheus", "Tiago", "Fábio", "Gustavo", "Diego")
+
+    // Inicializa dados dos jogadores
+    for (j in jogadoresA) {
+        (times[timeA]?.get("jogadores") as MutableMap<String, MutableMap<String, Any>>)[j] =
+            mutableMapOf("gols" to 0, "faltas" to 0, "substituido" to 0, "entrou" to 0, "lesao" to false)
+    }
+    for (j in jogadoresB) {
+        (times[timeB]?.get("jogadores") as MutableMap<String, MutableMap<String, Any>>)[j] =
+            mutableMapOf("gols" to 0, "faltas" to 0, "substituido" to 0, "entrou" to 0, "lesao" to false)
+    }
+
+    val tiposGol = mutableMapOf("normal" to 0, "falta" to 0, "penalti" to 0)
+
+    // Simular 5 partidas
+    repeat(5) {
+        val golsA = (0..3).random()
+        val golsB = (0..3).random()
+        val faltasA = (1..5).random()
+        val faltasB = (1..5).random()
+        val escanteiosA = (1..4).random()
+        val escanteiosB = (1..4).random()
+        val lateraisA = (2..6).random()
+        val lateraisB = (2..6).random()
+
+        // Atualiza dados do time A
+        times[timeA]?.set("golsMarcados", (times[timeA]?.get("golsMarcados") as Int) + golsA)
+        times[timeA]?.set("golsSofridos", (times[timeA]?.get("golsSofridos") as Int) + golsB)
+        times[timeA]?.set("faltasCometidas", (times[timeA]?.get("faltasCometidas") as Int) + faltasA)
+        times[timeA]?.set("escanteios", (times[timeA]?.get("escanteios") as Int) + escanteiosA)
+        times[timeA]?.set("laterais", (times[timeA]?.get("laterais") as Int) + lateraisA)
+
+        // Atualiza dados do time B
+        times[timeB]?.set("golsMarcados", (times[timeB]?.get("golsMarcados") as Int) + golsB)
+        times[timeB]?.set("golsSofridos", (times[timeB]?.get("golsSofridos") as Int) + golsA)
+        times[timeB]?.set("faltasCometidas", (times[timeB]?.get("faltasCometidas") as Int) + faltasB)
+        times[timeB]?.set("escanteios", (times[timeB]?.get("escanteios") as Int) + escanteiosB)
+        times[timeB]?.set("laterais", (times[timeB]?.get("laterais") as Int) + lateraisB)
+
+        // Simular gols e faltas de jogadores
+        for (i in 1..golsA) {
+            val jogador = jogadoresA.random()
+            val dados = (times[timeA]?.get("jogadores") as MutableMap<String, MutableMap<String, Any>>)[jogador]
+            dados?.set("gols", (dados["gols"] as Int) + 1)
+            val tipo = listOf("normal", "falta", "penalti").random()
+            tiposGol[tipo] = (tiposGol[tipo] ?: 0) + 1
+        }
+
+        for (i in 1..golsB) {
+            val jogador = jogadoresB.random()
+            val dados = (times[timeB]?.get("jogadores") as MutableMap<String, MutableMap<String, Any>>)[jogador]
+            dados?.set("gols", (dados["gols"] as Int) + 1)
+            val tipo = listOf("normal", "falta", "penalti").random()
+            tiposGol[tipo] = (tiposGol[tipo] ?: 0) + 1
+        }
+    }
+
+    // Análises
+    val maisGols = times.maxByOrNull { it.value["golsMarcados"] as Int }?.key
+    val maisFaltas = times.maxByOrNull { it.value["faltasCometidas"] as Int }?.key
+    val maisSofreu = times.maxByOrNull { it.value["golsSofridos"] as Int }?.key
+    val maisEscanteios = times.maxByOrNull { it.value["escanteios"] as Int }?.key
+
+    var jogadorMaisGols = ""
+    var maxGols = 0
+    for ((time, dados) in times) {
+        val jogadores = dados["jogadores"] as Map<String, Map<String, Any>>
+        for ((nome, stats) in jogadores) {
+            if ((stats["gols"] as Int) > maxGols) {
+                maxGols = stats["gols"] as Int
+                jogadorMaisGols = nome
+            }
+        }
+    }
+
+    val tipoMaisComum = tiposGol.maxByOrNull { it.value }?.key
+
+    println("🏆 Time que mais marcou gols: $maisGols")
+    println("🟥 Time que cometeu mais faltas: $maisFaltas")
+    println("⚽ Jogador que mais marcou gols: $jogadorMaisGols ($maxGols gols)")
+    println("🥅 Time que sofreu mais gols: $maisSofreu")
+    println("🎯 Tipo de gol mais comum: $tipoMaisComum")
+    println("🚩 Time que cobrou mais escanteios: $maisEscanteios")
+}
+
+============================================================================================================================================================================================================================
+
+Uma usina quer que você crie um programa que ajude a controlar a energia gerada. Para isso você deve
+criar uma classe que armazena os seguintes dados:
+a. Energia gerada;
+b. Início do horário de funcionamento;
+c. Término do horário de funcionamento;
+d. Supervisor (deve ser outra classe, com nome, turno e especialização);
+e. Profissional Responsável (deve ser outra classe, com nome, cargo, turno e supervisor);
+f. Tipos de Problemas (se você desejar, pode criar um ENUM).
+Toda vez que acontecer um problema o algoritmo deve gerar um relatório e armazenar esse mesmo
+relatório em um mapa, as chaves desse mapa deve abordar as seguintes questões:
+a. Qual horário aconteceu o problema;
+b. Quem era profissional responsável;
+c. Qual foi a natureza (o tipo) do problema;
+d. Descrição do problema;
+e. O problema foi resolvido;
+f. Houve impacto na geração de energia? Quanto?
+Simule ao menos 5 problemas. Imprima o relatório na tela, ordenados por horário e também faça um
+filtro de profissional responsável, especificado pelo usuário.
+
+https://pl.kotl.in/jfYut-VcE
+
+
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.TreeMap
+
+// ENUM para tipos de problema
+enum class TipoProblema {
+    FALHA_ELETRICA,
+    SUPERAQUECIMENTO,
+    FALHA_MECANICA,
+    ERRO_HUMANO,
+    CURTO_CIRCUITO
+}
+
+// Supervisor
+data class Supervisor(val nome: String, val turno: String, val especializacao: String)
+
+// Profissional responsável
+data class Profissional(
+    val nome: String,
+    val cargo: String,
+    val turno: String,
+    val supervisor: Supervisor
+)
+
+// Classe principal da Usina
+data class Usina(
+    val energiaGerada: Double,
+    val inicioFuncionamento: LocalTime,
+    val terminoFuncionamento: LocalTime,
+    val profissional: Profissional
+)
+
+// Relatório de problemas
+data class RelatorioProblema(
+    val horario: LocalTime,
+    val profissional: Profissional,
+    val tipo: TipoProblema,
+    val descricao: String,
+    val resolvido: Boolean,
+    val impactoEnergia: Double
+)
+
+fun main() {
+    // Criando supervisor e profissionais
+    val sup = Supervisor("Carlos Silva", "Noturno", "Elétrica")
+    val prof1 = Profissional("João Mendes", "Engenheiro", "Noturno", sup)
+    val prof2 = Profissional("Ana Souza", "Técnica", "Diurno", sup)
+
+    val usina = Usina(energiaGerada = 10000.0,
+        inicioFuncionamento = LocalTime.of(6, 0),
+        terminoFuncionamento = LocalTime.of(22, 0),
+        profissional = prof1
+    )
+
+    // Relatórios de problemas (mapa ordenado por horário)
+    val relatorios = TreeMap<LocalTime, RelatorioProblema>()
+
+    // Simulando 5 problemas
+    relatorios[LocalTime.of(8, 30)] = RelatorioProblema(
+        LocalTime.of(8, 30), prof1, TipoProblema.FALHA_ELETRICA,
+        "Queda de energia no setor 3", true, 150.0
+    )
+    relatorios[LocalTime.of(10, 15)] = RelatorioProblema(
+        LocalTime.of(10, 15), prof2, TipoProblema.SUPERAQUECIMENTO,
+        "Temperatura acima de 100ºC em unidade B", false, 300.0
+    )
+    relatorios[LocalTime.of(12, 50)] = RelatorioProblema(
+        LocalTime.of(12, 50), prof1, TipoProblema.ERRO_HUMANO,
+        "Comando incorreto acionou alarme", true, 50.0
+    )
+    relatorios[LocalTime.of(15, 10)] = RelatorioProblema(
+        LocalTime.of(15, 10), prof2, TipoProblema.FALHA_MECANICA,
+        "Problema no gerador principal", false, 500.0
+    )
+    relatorios[LocalTime.of(18, 45)] = RelatorioProblema(
+        LocalTime.of(18, 45), prof1, TipoProblema.CURTO_CIRCUITO,
+        "Curto-circuito em painel de controle", true, 200.0
+    )
+
+    val formatter = DateTimeFormatter.ofPattern("HH:mm")
+
+    // Imprimindo todos os relatórios, ordenados por horário
+    println("📝 RELATÓRIOS DE PROBLEMAS (ORDENADOS POR HORÁRIO):\n")
+    for ((horario, rel) in relatorios) {
+        println("🕒 ${horario.format(formatter)}")
+        println("👷 Profissional: ${rel.profissional.nome}")
+        println("⚠ Tipo: ${rel.tipo}")
+        println("📄 Descrição: ${rel.descricao}")
+        println("✅ Resolvido: ${rel.resolvido}")
+        println("⚡ Impacto na energia: ${rel.impactoEnergia} MW\n")
+    }
+
+    // Filtro por profissional (usuário informa)
+    print("\n🔍 Digite o nome do profissional para filtrar os problemas: ")
+    val nomeFiltro = readLine()?.trim()
+
+    println("\n📌 RELATÓRIOS DE $nomeFiltro:")
+    var encontrou = false
+    for ((_, rel) in relatorios) {
+        if (rel.profissional.nome.equals(nomeFiltro, ignoreCase = true)) {
+            encontrou = true
+            println("🕒 ${rel.horario.format(formatter)} - ${rel.tipo} - ${rel.descricao} - Impacto: ${rel.impactoEnergia} MW")
+        }
+    }
+    if (!encontrou) {
+        println("Nenhum relatório encontrado para este profissional.")
+    }
+}
+
