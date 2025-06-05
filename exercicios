@@ -381,3 +381,105 @@ fun main() {
     }
 }
 
+
+
+Declaração de Variáveis
+kotlin
+Copiar
+Editar
+val nome = "Maria"        // Imutável (como final em Java)
+var idade = 25            // Mutável
+
+2. Função Principal
+kotlin
+Copiar
+Editar
+fun main() {
+    println("Olá, Kotlin!")
+}
+
+3. Funções
+kotlin
+Copiar
+Editar
+fun saudacao(nome: String): String {
+    return "Olá, $nome"
+}
+
+4. Condicional if/else
+kotlin
+Copiar
+Editar
+val nota = 7
+
+if (nota >= 6) {
+    println("Aprovado")
+} else {
+    println("Reprovado")
+}
+
+ 5. When (switch do Kotlin)
+kotlin
+Copiar
+Editar
+val dia = 3
+
+val nomeDoDia = when(dia) {
+    1 -> "Domingo"
+    2 -> "Segunda"
+    3 -> "Terça"
+    else -> "Outro dia"
+}
+
+ 6. Laços de Repetição
+kotlin
+Copiar
+Editar
+// For
+for (i in 1..5) {
+    println(i)
+}
+
+// While
+var i = 1
+while (i <= 5) {
+    println(i)
+    i++
+}
+
+7. Arrays e Listas
+kotlin
+Copiar
+Editar
+val numeros = arrayOf(1, 2, 3)
+val nomes = listOf("Ana", "João", "Pedro")
+
+8. Classes e Objetos
+kotlin
+Copiar
+Editar
+class Pessoa(val nome: String, var idade: Int)
+
+fun main() {
+    val p = Pessoa("Lucas", 30)
+    println(p.nome)
+}
+
+9. Null Safety
+kotlin
+Copiar
+Editar
+var nome: String? = null
+
+// Safe call
+println(nome?.length)
+
+// Elvis operator
+val tamanho = nome?.length ?: 0
+
+ 10. Funções Lambda
+kotlin
+Copiar
+Editar
+val dobrar = { x: Int -> x * 2 }
+println(dobrar(4)) // Resultado: 8
