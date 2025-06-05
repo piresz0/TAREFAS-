@@ -548,3 +548,94 @@ Copiar
 Editar
 val mapaMutavel = mutableMapOf("A" to 1)
 mapaMutavel["B"] = 2
+
+
+
+
+
+
+
+exemplos de mapof e classe
+
+Claro! Vou te mostrar um exemplo simples de como usar o map com uma classe em JavaScript/TypeScript.
+
+Vamos supor que temos uma classe Pessoa e queremos transformar um array de objetos dessa classe usando map.
+
+javascript
+Copiar
+Editar
+// Definindo a classe Pessoa
+class Pessoa {
+  constructor(nome, idade) {
+    this.nome = nome;
+    this.idade = idade;
+  }
+
+  apresentar() {
+    return `Oi, meu nome é ${this.nome} e tenho ${this.idade} anos.`;
+  }
+}
+
+// Criando um array de pessoas
+const pessoas = [
+  new Pessoa('João', 25),
+  new Pessoa('Maria', 30),
+  new Pessoa('Carlos', 22),
+];
+
+// Usando map para criar um array só com as apresentações
+const apresentacoes = pessoas.map(pessoa => pessoa.apresentar());
+
+console.log(apresentacoes);
+
+
+
+
+2 exemplo 
+
+
+// Definição da classe Produto
+class Produto {
+  // O construtor recebe nome, preço e percentual de desconto
+  constructor(nome, preco, descontoPercentual) {
+    this.nome = nome;                   // nome do produto
+    this.preco = preco;                 // preço original
+    this.descontoPercentual = descontoPercentual; // desconto em %
+  }
+
+  // Método que calcula o preço já com o desconto aplicado
+  precoComDesconto() {
+    // Multiplica o preço original pelo fator (1 - desconto/100)
+    return this.preco * (1 - this.descontoPercentual / 100);
+  }
+
+  // Método que retorna um objeto formatado com as informações do produto
+  infoFormatada() {
+    return {
+      // Nome em maiúsculas para destaque
+      nome: this.nome.toUpperCase(),
+
+      // Preço original formatado como moeda com 2 casas decimais
+      precoOriginal: `R$${this.preco.toFixed(2)}`,
+
+      // Preço final com desconto, também formatado
+      precoFinal: `R$${this.precoComDesconto().toFixed(2)}`,
+
+      // Percentual do desconto exibido em string
+      desconto: `${this.descontoPercentual}%`,
+    };
+  }
+}
+
+// Criando um array com instâncias da classe Produto
+const produtos = [
+  new Produto('Camiseta', 50, 10),
+  new Produto('Calça', 120, 20),
+  new Produto('Tênis', 300, 15),
+];
+
+// Usando o map para transformar cada Produto em seu formato final
+const produtosFormatados = produtos.map(produto => produto.infoFormatada());
+
+// Exibindo o resultado formatado no console
+console.log(produtosFormatados);
