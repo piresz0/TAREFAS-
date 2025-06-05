@@ -483,3 +483,68 @@ Copiar
 Editar
 val dobrar = { x: Int -> x * 2 }
 println(dobrar(4)) // Resultado: 8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sintaxe Básica
+kotlin
+Copiar
+Editar
+val mapa = mapOf("chave1" to "valor1", "chave2" to "valor2")
+Exemplo:
+
+kotlin
+Copiar
+Editar
+val capitais = mapOf(
+    "Brasil" to "Brasília",
+    "França" to "Paris",
+    "Japão" to "Tóquio"
+)
+
+Acessando um valor:
+
+kotlin
+Copiar
+Editar
+println(capitais["Brasil"]) // Brasília
+
+
+ Iterando sobre um mapOf
+kotlin
+Copiar
+Editar
+for ((pais, capital) in capitais) {
+    println("A capital de $pais é $capital")
+}
+
+
+ Verificando se existe uma chave ou valor
+kotlin
+Copiar
+Editar
+println("Brasil" in capitais) // true
+println(capitais.containsKey("França")) // true
+println(capitais.containsValue("Paris")) // true
+
+
+mapOf é somente leitura
+Se você quiser um mapa que possa modificar (adicionar, remover, etc.), use mutableMapOf.
+
+kotlin
+Copiar
+Editar
+val mapaMutavel = mutableMapOf("A" to 1)
+mapaMutavel["B"] = 2
